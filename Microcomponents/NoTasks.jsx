@@ -1,5 +1,4 @@
 import AddIcon from '@mui/icons-material/Add';
-import ErrorIcon from '@mui/icons-material/ErrorOutlined';
 
 export const NoTasks = () => {
     return(

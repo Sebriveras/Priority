@@ -4,7 +4,7 @@ import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-ki
 import { useState, useEffect } from 'react'
 
 import { TaskCard } from '../Components/TaskCard'
-import { NoTasks } from '../Microcomponents/noTasks'
+import { NoTasks } from '../Microcomponents/NoTasks'
 import { NoTasksDone } from '../Microcomponents/NoTasksDone'
 
 const titles = {
