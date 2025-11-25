@@ -7,7 +7,7 @@ export function App() {
     <div className='
     flex flex-col
     items-center
-    gap-6
+    gap-1
     pb-8
     w-screen h-screen  
     bg-slate-50
