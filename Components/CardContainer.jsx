@@ -56,7 +56,7 @@ export function CardContainer({ content }) {
         const today = new Date().toDateString();
 
         if (savedDate !== today) {
-            localStorage.removeItem("arrayCards");
+            //localStorage.removeItem("arrayCards");
             localStorage.setItem("lastSavedDate", today);
             return; // No cargamos nada viejo
         }
@@ -103,7 +103,7 @@ export function CardContainer({ content }) {
     };
 
     return (
-        <div className='overflow-y-auto flex flex-col h-full py-2 px-3 gap-1.5'>
+        <div className='overflow-y-auto flex flex-col h-full py-1.5 px-3 gap-2'>
 
             {screenState === "non-empty" && (
                 <DndContext 

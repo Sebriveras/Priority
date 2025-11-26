@@ -31,7 +31,7 @@ export const NoTasks = () => {
                 </div>
             </div>
 
-            <p className='italic text-slate-400'>- Remeber, all tasks are deleted every day -</p>  
+            <p className='italic text-slate-400'>- Try to complete all your tasks in a sinlge day -</p>  
         </div>
     )
 }

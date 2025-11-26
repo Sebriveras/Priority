@@ -1,3 +1,6 @@
+import IconLight from "../Microcomponents/IconLight"
+import FavoriteIcon from '@mui/icons-material/Favorite';
+
 export const Header = () =>{
 
     return(
@@ -5,11 +8,20 @@ export const Header = () =>{
             className="flex
             items-center
             justify-between
-            px-14
-            w-full h-15">
+            px-8
+            w-full h-24">
 
-            <p className="text-2xl text-center font-medium text-slate-400">Priority</p>
-            <p className="text-blue-600">Make a donation</p>
+            <IconLight/>
+
+            <button className="
+            flex flex-row 
+            items-center justify-center
+            py-2 px-4 gap-2
+            border-[1.7px] border-pink-600 rounded-full
+            bg-pink-100 shadow-md cursor-pointer">
+                <FavoriteIcon className="text-pink-600"/>
+                <p className="text-pink-600 font-medium">Support this project</p>
+            </button>
         </div>
     )
 }

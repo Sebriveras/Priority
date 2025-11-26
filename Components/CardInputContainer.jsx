@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { CardContainer } from './CardContainer'
 import { InputText } from './InputText'
+import { Switch } from '../Microcomponents/Switch'
 
 export const CardInputContainer = () =>{
     const [content, setContent] = useState("")
@@ -11,18 +12,28 @@ export const CardInputContainer = () =>{
 
     return(
         <div className='
-        overflow-hidden
-        flex flex-col
+        flex flex-row
+        items-start justify-center
         h-full
-        border border-slate-300 rounded-xl
-        w-2/4
-        bg-slate-100'> 
-            <CardContainer
-            content={content}/>
+        w-1/2'>
+            <div className='w-8'></div>
 
-            <InputText
-            capturedText={handleCapturedText}
-            />
+            <div className='
+                overflow-hidden
+                flex flex-col
+                h-full w-full
+                border border-slate-300 
+                rounded-tl-xl rounded-tr-xl rounded-bl-xl rounded-br-xl
+                bg-slate-100'>  
+
+                <CardContainer
+                content={content}/>
+
+                <InputText
+                capturedText={handleCapturedText}/>
+            </div> 
+
+            <Switch/>
         </div>
     )
 }
