@@ -9,7 +9,7 @@ export function App() {
     items-center
     gap-1
     pb-8
-    w-screen h-screen  
+    w-screen h-screen max-h-screen 
     bg-slate-50
     '>
       <Header/>

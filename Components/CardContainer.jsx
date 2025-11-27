@@ -6,8 +6,10 @@ import { useState, useEffect } from 'react'
 import { TaskCard } from '../Components/TaskCard'
 import { NoTasks } from '../Microcomponents/NoTasks'
 import { NoTasksDone } from '../Microcomponents/NoTasksDone'
+import { NoTasksOnCheck } from '../Microcomponents/NoTasksOnCheck'
 
 const titles = {
+    done : <p className='text-sm font-semibold text-emerald-500 select-none'>Completed tasks</p>,
     veryLow : <p className='text-sm font-semibold text-gray-400 select-none'>Ignore for now</p>,
     low : <p className='text-sm font-semibold text-blue-500 select-none'>Can wait</p>,
     medium : <p className='text-sm font-semibold text-orange-500 select-none'>Needs attention</p>,
@@ -16,7 +18,7 @@ const titles = {
 };
 
 const getTemplate = (size) => {
-    if(size < 3){return { veryHigh: 0 , high: 0 , medium: 0 , low: 1 , veryLow: 0 }}
+    if(size < 3){return { veryHigh: 0 , high: 0 , medium: 0 , low: 1 , veryLow: 0}}
     if(size < 6){return { veryHigh: 0 , high: 0 , medium: 0.3 , low: 0.7 , veryLow: 0 }}
     if(size < 8){return { veryHigh: 0 , high: 0.15 , medium: 0.4 , low: 0.45 , veryLow: 0 }}
     if(size < 9){return { veryHigh: 0.1 , high: 0.15 , medium: 0.3 , low: 0 , veryLow: 0.55 }}
@@ -45,27 +47,38 @@ const getTitle = (urg, prevUrg) => {
     return null;
 };
 
-export function CardContainer({ content }) {
+export function CardContainer({ content, switchMode}) {
     const [arrayCards, setArrayCards] = useState([]);
+    const [arrayDoneCards, setArrayDoneCards] = useState([])
     const [taskCreated, setTaskCreated] = useState(false);
+    
     //Cargar array del local storage
     useEffect(() => {
-        const saved = JSON.parse(localStorage.getItem("arrayCards"));
+        const savedArrayCards = JSON.parse(localStorage.getItem("arrayCards"));
+        const savedArrayDoneCards = JSON.parse(localStorage.getItem("arrayDoneCards"));
         const savedDate = localStorage.getItem("lastSavedDate");
 
         const today = new Date().toDateString();
 
-        if (savedDate !== today) {
-            //localStorage.removeItem("arrayCards");
+        const isNewDay = savedDate !== today;
+
+        if (isNewDay) {
+            localStorage.removeItem("arrayDoneCards");
             localStorage.setItem("lastSavedDate", today);
-            return; // No cargamos nada viejo
         }
 
-        if(saved && Array.isArray(saved)){
-            setArrayCards(saved)
-            setTaskCreated(saved.length > 0);
+        // Cargar pendientes
+        if (savedArrayCards && Array.isArray(savedArrayCards)) {
+            setArrayCards(savedArrayCards);
+            setTaskCreated(savedArrayCards.length > 0);
         }
-    }, [])
+
+        // ✔ Cargar done SÓLO si no es un día nuevo
+        if (!isNewDay && savedArrayDoneCards && Array.isArray(savedArrayDoneCards)) {
+            setArrayDoneCards(savedArrayDoneCards);
+        }
+
+    }, []);
     //Guardar nuevas tareas
     useEffect(() => {
         if (!content) return;
@@ -75,20 +88,43 @@ export function CardContainer({ content }) {
     useEffect(() => {
         if (arrayCards.length > 0) setTaskCreated(true);
     }, [arrayCards.length]);
-    //Guardar array en el local storage cuando arrayCards cambie
+    //Guardar arrayCards en el local storage cuando arrayCards cambie
     useEffect(() => {
         localStorage.setItem("arrayCards", JSON.stringify(arrayCards));
         localStorage.setItem("lastSavedDate", new Date().toDateString());
     }, [arrayCards]);
-
+    //Guardar arrayDoneCards en el local storage cuando arrayCards cambie
+    useEffect(() => {
+        localStorage.setItem("arrayDoneCards", JSON.stringify(arrayDoneCards));
+    }, [arrayDoneCards]);
+    //Convertir esto en una funcion
     const screenState = (() => {
-        if (arrayCards.length === 0 && !taskCreated) return "empty-first";
-        if (arrayCards.length === 0 && taskCreated) return "empty-done";
-        return "non-empty";
+        //Pending screens
+        if (arrayCards.length === 0 && !taskCreated && switchMode === 'pending') return "no-tasks-created-yet";
+        if (arrayCards.length === 0 && taskCreated && switchMode === 'pending') return "no-tasks-all-done";
+        if (arrayCards.length > 0 && switchMode === 'pending') return "tasks-created-on-pending"
+        //Check screens
+        if (arrayDoneCards.length > 0 && switchMode === 'check') return "tasks-completed-on-check"
+        if (arrayDoneCards.length === 0 && switchMode === 'check') return "no-taks-on-check"
     })();
 
-    const doneTask = (index) => {
-        setArrayCards(prev => prev.filter((_, i) => i !== index));
+    const statusTaskChanged = (index, type) => {
+
+        if (type === 'done') {
+            // mover desde DONE hacia PENDING
+            setArrayDoneCards(prev => {
+                const task = prev[index];
+                setArrayCards(cards => [...cards, task]);
+                return prev.filter((_, i) => i !== index);
+            });
+        } else {
+            // mover desde PENDING hacia DONE
+            setArrayCards(prev => {
+                const task = prev[index];
+                setArrayDoneCards(done => [...done, task]);
+                return prev.filter((_, i) => i !== index);
+            });
+        }
     };
 
     const handleDragEnd = (event) => {
@@ -105,7 +141,7 @@ export function CardContainer({ content }) {
     return (
         <div className='overflow-y-auto flex flex-col h-full py-1.5 px-3 gap-2'>
 
-            {screenState === "non-empty" && (
+            {(screenState === "tasks-created-on-pending") && (
                 <DndContext 
                     collisionDetection={closestCenter}
                     onDragEnd={handleDragEnd}
@@ -124,9 +160,9 @@ export function CardContainer({ content }) {
                                     <TaskCard
                                         id={index}
                                         type={urg}
-                                        position={index}
+                                        index={index}
                                         content={card}
-                                        posBack={doneTask}
+                                        posBack={statusTaskChanged}
                                     />
                                 </div>
                             );
@@ -134,9 +170,27 @@ export function CardContainer({ content }) {
                     </SortableContext>
                 </DndContext>
             )}
+            {screenState === "tasks-completed-on-check" && (
+                arrayDoneCards.map((card, index) => {
 
-            {screenState === "empty-first" && <NoTasks />}
-            {screenState === "empty-done" && <NoTasksDone />}
+                    return(
+                        <div className=' flex flex-col gap-2'>
+                            {index === 0 && titles.done}
+
+                            <TaskCard
+                                id={index}
+                                type={"done"}
+                                index={index}
+                                content={card}  
+                                posBack={statusTaskChanged}
+                            />
+                        </div>
+                    )
+                })
+            )}
+            {screenState === "no-tasks-created-yet" && <NoTasks/>}
+            {screenState === "no-tasks-all-done" && <NoTasksDone/>}
+            {screenState === "no-taks-on-check" && <NoTasksOnCheck/>}
 
         </div>
     );

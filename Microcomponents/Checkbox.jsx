@@ -1,18 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBoxOutlined";
 
-export const Checkbox = ({clicked}) => {
-  const [hover, setHover] = useState(false);
+export const Checkbox = ({ isClicked, isChecked }) => {
+  const [checked, setChecked] = useState(isChecked);
 
-  const Icon = hover ? CheckBoxIcon : CheckBoxOutlineBlankIcon;
+  // Sincroniza checked visual cuando isChecked cambie desde afuera
+  useEffect(() => {
+    setChecked(isChecked);
+  }, [isChecked]);
+
+  // Seleccionar componente dinámico
+  const Icon = checked ? CheckBoxIcon : CheckBoxOutlineBlankIcon;
 
   return (
     <Icon
       className="text-slate-500 cursor-pointer"
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      onClick={clicked}
+      onMouseEnter={() => setChecked(!isChecked)} // ← invertir estado inicial
+      onMouseLeave={() => setChecked(isChecked)}   // ← regresar al estado inicial
+      onClick={isClicked}
     />
   );
 };

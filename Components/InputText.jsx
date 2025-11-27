@@ -2,44 +2,64 @@ import AddIcon from '@mui/icons-material/Add';
 import { useState, useRef, useEffect } from "react";
 import { ButtonInputText } from '../Microcomponents/ButtonInputText';
 
-export const InputText = ({ capturedText }) => {
-    const [clicked, setClicked] = useState(false);
+export const InputText = ({ capturedText, onInputEvent }) => {
+    const [editing, setEditing] = useState(false);
     const [text, setText] = useState("");
     const inputRef = useRef(null);
+    const wrapperRef = useRef(null);
+    const editingRef = useRef(false);
 
     const isButtonActive = text.trim().length > 0;
 
-    const handleClick = () => {
+    const submitTask = () => {
         if (!isButtonActive) return;
+
         capturedText(text);
-        setText("");
+        setText("");                // limpiar input
+        onInputEvent("task-submitted"); // avisar al padre
+        // ❗ NO cerramos el input con setEditing(false)
     };
 
-    const handleChange = ({ target: { value } }) => {
-        setText(value);
-    };
-
-    // 🚀 Hace focus cuando se vuelve editable
+    // Manejo del enfoque cuando se abre el input
     useEffect(() => {
-        if (clicked && inputRef.current) {
-            inputRef.current.focus();
-        }
-    }, [clicked]);
+        editingRef.current = editing;
+        if (editing) inputRef.current?.focus();
+    }, [editing]);
+
+    // Cerrar al hacer click afuera
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (
+                editingRef.current &&
+                wrapperRef.current &&
+                !wrapperRef.current.contains(e.target)
+            ) {
+                setEditing(false);
+                onInputEvent("input-closed");
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
     return (
         <div
+            ref={wrapperRef}
             className="
-                flex flex-row
-                items-center
-                h-14 w-full
-                py-3 px-3 gap-2 
+                flex flex-row items-center
+                h-14 w-full py-3 px-3 gap-2 
                 border-t border-slate-300
-                cursor-pointer
-                hover:bg-slate-200
+                cursor-pointer hover:bg-slate-200
             "
-            onClick={() => setClicked(true)}
+            onClick={() => {
+                if (!editing) {
+                    setEditing(true);
+                    onInputEvent("input-opened");
+                }
+            }}
         >
-            {!clicked ? (
+            {!editing ? (
                 <>
                     <AddIcon className='text-blue-600' />
                     <p className="font-medium text-blue-600">New task</p>
@@ -47,26 +67,25 @@ export const InputText = ({ capturedText }) => {
             ) : (
                 <>
                     <input
-                        ref={inputRef}   // ← 👈 referencia para enfocar
-                        className='
-                            w-full
-                            text-slate-700
-                            placeholder-slate-400
-                            outline-none 
-                            border-none
-                        '
+                        ref={inputRef}
+                        className="
+                            w-full text-slate-700 placeholder-slate-400
+                            outline-none border-none
+                        "
                         type='text'
-                        placeholder='Write your task and then press Enter...'
+                        placeholder='Write your task and press Enter...'
                         value={text}
-                        onChange={handleChange}
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter") handleClick();
-                        }}
+                        onChange={(e) => setText(e.target.value)}
+                        onKeyDown={(e) => e.key === "Enter" && submitTask()}
+                        onClick={(e) => e.stopPropagation()}
                     />
 
                     <ButtonInputText
                         state={isButtonActive}
-                        handleClick={handleClick}
+                        handleClick={(e) => {
+                            e.stopPropagation();
+                            submitTask();
+                        }}
                     />
                 </>
             )}
