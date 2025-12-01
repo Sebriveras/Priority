@@ -14,11 +14,13 @@ export const Checkbox = ({ isClicked, isChecked }) => {
   const Icon = checked ? CheckBoxIcon : CheckBoxOutlineBlankIcon;
 
   return (
-    <Icon
+    <div className="flex items-center justify-center w-8 h-8">
+      <Icon
       className="text-slate-500 cursor-pointer"
       onMouseEnter={() => setChecked(!isChecked)} // ← invertir estado inicial
       onMouseLeave={() => setChecked(isChecked)}   // ← regresar al estado inicial
-      onClick={isClicked}
-    />
+      onClick={isClicked}/>
+    </div>
+
   );
 };

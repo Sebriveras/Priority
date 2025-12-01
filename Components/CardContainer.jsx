@@ -1,7 +1,7 @@
 import { DndContext, closestCenter } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 
 import { TaskCard } from '../Components/TaskCard'
 import { NoTasks } from '../Microcomponents/NoTasks'
@@ -127,6 +127,13 @@ export function CardContainer({ content, switchMode}) {
         }
     };
 
+    const updateCardContent = (pack) => {
+        setArrayCards(prev =>
+            prev.map((item, i) => (i === pack.index ? pack.x : item))
+        );
+    };
+
+
     const handleDragEnd = (event) => {
         const { active, over } = event;
 
@@ -162,6 +169,7 @@ export function CardContainer({ content, switchMode}) {
                                         type={urg}
                                         index={index}
                                         content={card}
+                                        newContent={updateCardContent} 
                                         posBack={statusTaskChanged}
                                     />
                                 </div>
@@ -181,7 +189,8 @@ export function CardContainer({ content, switchMode}) {
                                 id={index}
                                 type={"done"}
                                 index={index}
-                                content={card}  
+                                content={card} 
+                                newContent={(x)=>{console.log(x)}} 
                                 posBack={statusTaskChanged}
                             />
                         </div>
