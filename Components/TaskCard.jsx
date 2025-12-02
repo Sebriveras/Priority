@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
@@ -13,6 +11,7 @@ import AdjustOutlinedIcon from '@mui/icons-material/AdjustOutlined';
 import CampaignIcon from '@mui/icons-material/CampaignOutlined';
 import PriorityHighIcon from '@mui/icons-material/PriorityHighOutlined';
 import CrisisAlertIcon from '@mui/icons-material/CrisisAlertOutlined';
+import { MoreActionsMenu } from './MoreActionsMenu.jsx';
 
 const IconTypes = {
     done: SentimentSatisfiedAltOutlinedIcon,
@@ -25,18 +24,18 @@ const IconTypes = {
 
 const iconColors = {
     done: 'text-emerald-500',
-    veryLow: 'text-stone-400',
-    low: 'text-blue-500',
+    veryLow: 'text-slate-400',
+    low: 'text-indigo-500',
     medium: 'text-orange-500',
     high: 'text-red-500',
     veryHigh: 'text-purple-500',
-    default: 'text-stone-400',
+    default: 'text-slate-400',
 };
 
 const textStyles = {
-    veryLow: "text-stone-400",
-    done: "text-stone-400 line-through",
-    default: "text-stone-700",
+    veryLow: "text-slate-400",
+    done: "text-slate-400 line-through",
+    default: "text-slate-700",
 };
 
 const borderColors = {
@@ -45,17 +44,39 @@ const borderColors = {
     default: "border border-transparent"
 };
 
-export const TaskCard = ({ type, index, content, newContent, posBack }) => {
 
-    const [cardMode, setCardMode] = useState('default');
+export const TaskCard = ({
+    type,
+    index,
+    content,
+    newContent,
+    remove,
+    posBack,
+    editingId,
+    setEditingId
+    }) => {
+
+    const isEditing = editingId === index;
 
     const handleOnSave = (x) => {
-        const pack = { index, x };
-        newContent(pack);
+        newContent({ index, x });
+        setEditingId(null); // salir de edición
     };
 
-    const { attributes, listeners, setNodeRef, transform } =
-        useSortable({ id: index });
+    const handleOnOptionClick = (id) => {
+        if(id === 'edit') return setEditingId(index)
+        if(id === 'remove') return remove(index)
+    };  
+
+    const handleCancel = () => setEditingId(null);
+
+    // Sortable (dnd-kit)
+    const {
+        attributes,
+        listeners,
+        setNodeRef,
+        transform
+    } = useSortable({ id: index });
 
     const style = {
         transform: transform ? CSS.Transform.toString(transform) : undefined,
@@ -66,6 +87,7 @@ export const TaskCard = ({ type, index, content, newContent, posBack }) => {
     const borderClass = borderColors[type] || borderColors.default;
     const textClass = textStyles[type] || textStyles.default;
     const checked = type === 'done';
+
 
     return (
         <div
@@ -81,24 +103,22 @@ export const TaskCard = ({ type, index, content, newContent, posBack }) => {
             `}
         >
 
-            {cardMode === 'default' && (
+            {/* ---------- VIEW MODE ---------- */}
+            {!isEditing && (
                 <>
-                    <div {...listeners} className='flex w-full gap-3'>
+                    <div {...listeners} className="flex w-full gap-3">
                         {Icon && <Icon className={iconColor} />}
+
                         <p className={`w-full text-start text-base ${textClass}`}>
                             {content}
                         </p>
                     </div>
 
-                    <div className='flex flex-row items-center justify-center gap-1'>
-
-                        {/* ⛔ Ocultar botón de editar cuando la tarea es DONE */}
+                    <div className="flex flex-row items-center justify-center gap-1">
+                        {/* Ocultar botón de editar cuando estado = done */}
                         {type !== 'done' && (
-                            <IconButton
-                                icon={'edit'}
-                                type={'deafult'}
-                                onButtonClick={() => setCardMode('edit')}
-                            />
+                            <MoreActionsMenu
+                            onOptionClick={handleOnOptionClick}/>
                         )}
 
                         <Checkbox
@@ -109,24 +129,27 @@ export const TaskCard = ({ type, index, content, newContent, posBack }) => {
                 </>
             )}
 
-            {cardMode === 'edit' && (
+            {/* ---------- EDIT MODE ---------- */}
+            {isEditing && (
                 <>
-                    <div className='flex flex-row items-center justify-start w-full h-full gap-4'>
+                    <div className="flex flex-row items-center justify-start w-full h-full gap-4">
                         {Icon && <Icon className={iconColor} />}
+
                         <CardInputText
                             content={content}
                             onSave={handleOnSave}
-                            switchState={(state) => setCardMode(state)}
+                            switchState={handleCancel}
                         />
                     </div>
 
                     <IconButton
-                        icon={'cancel'}
-                        type={'deafult'}
-                        onButtonClick={() => setCardMode('default')}
+                        icon="cancel"
+                        type="default"
+                        onButtonClick={handleCancel}
                     />
                 </>
             )}
+
         </div>
     );
 };

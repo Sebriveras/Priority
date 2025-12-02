@@ -2,35 +2,69 @@ import { useRef, useEffect, useState } from "react";
 import { IconButton } from "./IconButton";
 
 export const CardInputText = ({ content, onSave, switchState }) => {
-    const [text, setText] = useState(content)
+    const [text, setText] = useState(content);
+
+    const wrapperRef = useRef(null);  // 👈 Nuevo ref para todo el componente
     const inputRef = useRef(null);
+
+    const changesOnText = content === text;
 
     useEffect(() => {
         inputRef.current?.focus();
     }, []);
 
+    // 👇 Detecta clic fuera del componente
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+                switchState("default");
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    const handleChange = (e) => setText(e.target.value);
+
+    const handleKeyDown = (e) => {
+        if (e.key === "Escape") return switchState("default");
+        if (e.key === "Enter") {
+            e.preventDefault();
+            if (!changesOnText) handleClick();
+        }
+    };
+
     const handleClick = () => {
-        onSave(text);
-        switchState("default");
+        if (!changesOnText) {
+            onSave(text);
+            switchState("default");
+        }
     };
 
     return (
-        <div className="flex flex-row items-center px-3 w-full h-full bg-blue-50 rounded-md outline outline-2 outline-blue-600 outline-offset-0">
+        <div
+            ref={wrapperRef}  // 👈 Se agrega el ref
+            className="flex flex-row items-center px-3 w-full h-full bg-blue-50 rounded-md outline outline-2 outline-blue-600 outline-offset-0"
+        >
             <input
                 ref={inputRef}
+                aria-label="Editar texto"
                 className="flex w-full text-slate-700 placeholder-slate-700 outline-none border-none"
                 value={text}
-                onChange={(e) => setText(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleClick()}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
                 type="text"
             />
 
             <IconButton
-                icon={"save"}
-                type={"main"}
+                icon="save"
+                type={changesOnText ? "disabled" : "main"}
                 onButtonClick={handleClick}
             />
         </div>
     );
 };
-

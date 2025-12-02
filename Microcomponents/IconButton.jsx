@@ -3,12 +3,12 @@ import { useState } from 'react';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVertOutlined';
-import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
 const typeColor = {
     main :'text-blue-600',
-    default : 'text-slate-500',
+    default : 'text-slate-600',
+    disabled : 'text-slate-400',
 };
 
 const IconDic = {
