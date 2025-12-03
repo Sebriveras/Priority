@@ -23,24 +23,24 @@ const IconTypes = {
 };
 
 const iconColors = {
-    done: 'text-emerald-500',
-    veryLow: 'text-slate-400',
-    low: 'text-indigo-500',
-    medium: 'text-orange-500',
-    high: 'text-red-500',
-    veryHigh: 'text-purple-500',
-    default: 'text-slate-400',
+    done: 'text-emerald-500 dark:text-emerald-400',
+    veryLow: 'text-slate-400 dark:text-slate-400',
+    low: 'text-indigo-500 dark:text-indigo-400',
+    medium: 'text-orange-500 dark:text-orange-400',
+    high: 'text-red-500 dark:text-red-400',
+    veryHigh: 'text-purple-500 dark:text-purple-400',
+    default: 'text-slate-400 dark:text-slate-400',
 };
 
 const textStyles = {
-    veryLow: "text-slate-400",
-    done: "text-slate-400 line-through",
-    default: "text-slate-700",
+    veryLow: "text-slate-400 dark:text-slate-400" ,
+    done: "text-slate-400 line-through dark:text-slate-400",
+    default: "text-slate-700 dark:text-slate-100",
 };
 
 const borderColors = {
-    high: "border border-red-500",
-    veryHigh: "border border-purple-500",
+    high: "border border-red-500 dark:border-red-400",
+    veryHigh: "border border-purple-500 dark:border-purple-400",
     default: "border border-transparent"
 };
 
@@ -98,7 +98,8 @@ export const TaskCard = ({
                 flex flex-row items-center
                 w-full h-12 max-h-11 px-3 gap-3
                 rounded-md cursor-grab select-none
-                bg-slate-50 shadow-[0_1px_4px_rgba(0,0,0,0.20)]
+                bg-slate-50 dark:bg-slate-700
+                shadow-[0_1px_4px_rgba(0,0,0,0.20)]
                 ${borderClass}
             `}
         >

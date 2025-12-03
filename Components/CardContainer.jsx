@@ -13,12 +13,12 @@ import { NoTasksOnCheck } from '../Microcomponents/NoTasksOnCheck'
 // TITLES, TEMPLATE, URGENCY — sin cambios
 // ----------------------------------------------------------
 const titles = {
-    done : <p className='text-sm font-semibold text-emerald-500 select-none'>Completed tasks</p>,
-    veryLow : <p className='text-sm font-semibold text-gray-400 select-none'>Ignore for now</p>,
-    low : <p className='text-sm font-semibold text-indigo-500 select-none'>Can wait</p>,
-    medium : <p className='text-sm font-semibold text-orange-500 select-none'>Needs attention</p>,
-    high : <p className='text-sm font-semibold text-red-500 select-none'>Urgent</p>,
-    veryHigh : <p className='text-sm font-semibold text-purple-500 select-none'>Critical</p>,
+    done : <p className='text-sm font-semibold text-emerald-500 dark:text-emerald-400 select-none'>Completed tasks</p>,
+    veryLow : <p className='text-sm font-semibold text-gray-400 dark:text-gray-400 select-none'>Ignore for now</p>,
+    low : <p className='text-sm font-semibold text-indigo-500 dark:text-indigo-400 select-none'>Can wait</p>,
+    medium : <p className='text-sm font-semibold text-orange-500 dark:text-orange-400 select-none'>Needs attention</p>,
+    high : <p className='text-sm font-semibold text-red-500 dark:text-red-400 select-none'>Urgent</p>,
+    veryHigh : <p className='text-sm font-semibold text-purple-500 dark:text-purple-400 select-none'>Critical</p>,
 };
 
 const getTemplate = (size) => {

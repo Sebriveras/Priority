@@ -48,12 +48,15 @@ export const CardInputText = ({ content, onSave, switchState }) => {
     return (
         <div
             ref={wrapperRef}  // 👈 Se agrega el ref
-            className="flex flex-row items-center px-3 w-full h-full bg-blue-50 rounded-md outline outline-2 outline-blue-600 outline-offset-0"
+            className="flex flex-row items-center 
+            px-3 w-full h-full 
+            bg-blue-50 dark:bg-slate-700 rounded-md 
+            outline outline-2 outline-blue-600 dark:outline-blue-400 outline-offset-0"
         >
             <input
                 ref={inputRef}
                 aria-label="Editar texto"
-                className="flex w-full text-slate-700 placeholder-slate-700 outline-none border-none"
+                className="flex w-full text-slate-700 dark:text-slate-100 placeholder-slate-700 dark:placeholder-slate-200 outline-none border-none"
                 value={text}
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}

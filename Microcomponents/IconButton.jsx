@@ -6,9 +6,9 @@ import MoreVertIcon from '@mui/icons-material/MoreVertOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
 const typeColor = {
-    main :'text-blue-600',
-    default : 'text-slate-600',
-    disabled : 'text-slate-400',
+    main :'text-blue-600 dark:text-blue-400',
+    default : 'text-slate-600 dark:text-slate-400',
+    disabled : 'text-slate-400 dark:text-slate-500',
 };
 
 const IconDic = {
@@ -20,8 +20,8 @@ const IconDic = {
 
 const buttonColorState = {
     default : '',
-    hover :  'bg-slate-100',
-    active : 'bg-slate-200',
+    hover :  'bg-slate-100 dark:bg-slate-600',
+    active : 'bg-slate-200 dark:bg-slate-500',
 }
 
 export const IconButton = ({icon, type, onButtonClick}) => {

@@ -37,8 +37,9 @@ export const CardInputContainer = () => {
             <div className='
             flex flex-col
             w-full h-full
-            border border-slate-300 rounded-tl-xl rounded-bl-xl rounded-br-xl 
-            bg-slate-100'>
+            overflow-hidden
+            border border-slate-300 dark:border-slate-600 rounded-tl-xl rounded-bl-xl rounded-br-xl 
+            bg-slate-100 dark:bg-slate-800'>
 
                 <CardContainer
                     content={content}

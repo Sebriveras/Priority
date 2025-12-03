@@ -49,8 +49,8 @@ export const InputText = ({ capturedText, onInputEvent }) => {
             className="
                 flex flex-row items-center
                 h-14 w-full py-3 px-3 gap-2 
-                border-t border-slate-300
-                cursor-pointer hover:bg-slate-200
+                border-t border-slate-300 dark:border-slate-600
+                cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900
             "
             onClick={() => {
                 if (!editing) {
@@ -61,15 +61,15 @@ export const InputText = ({ capturedText, onInputEvent }) => {
         >
             {!editing ? (
                 <>
-                    <AddIcon className='text-blue-600' />
-                    <p className="font-medium text-blue-600">New task</p>
+                    <AddIcon className='text-blue-600 dark:text-blue-400' />
+                    <p className="font-medium text-blue-600 dark:text-blue-400">New task</p>
                 </>
             ) : (
                 <>
                     <input
                         ref={inputRef}
                         className="
-                            w-full text-slate-700 placeholder-slate-400
+                            w-full text-slate-700 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-400
                             outline-none border-none
                         "
                         type='text'

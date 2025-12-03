@@ -16,7 +16,7 @@ export const Checkbox = ({ isClicked, isChecked }) => {
   return (
     <div className="flex items-center justify-center w-8 h-8">
       <Icon
-      className="text-slate-500 cursor-pointer"
+      className="text-slate-500 dark:text-slate-400 cursor-pointer"
       onMouseEnter={() => setChecked(!isChecked)} // ← invertir estado inicial
       onMouseLeave={() => setChecked(isChecked)}   // ← regresar al estado inicial
       onClick={isClicked}/>

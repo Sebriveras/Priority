@@ -28,20 +28,20 @@ export const Switch = ({ mode, externalMode }) => {
                 flex flex-col items-center justify-center
                 w-14 py-5 gap-4
                 rounded-tr-xl rounded-br-xl
-                border-t border-r border-b border-slate-300 
-                bg-slate-100
+                border-t border-r border-b border-slate-300 dark:border-slate-600
+                bg-slate-100 dark:bg-slate-800
                 cursor-pointer select-none
             "
         >
             {/* PENDING ICON */}
             {state === "pending"
-                ? <PendingIcon className="text-blue-600" />
+                ? <PendingIcon className="text-blue-600 dark:text-blue-400" />
                 : <PendingOutlinedIcon className="text-slate-400" />
             }
 
             {/* CHECK ICON */}
             {state === "check"
-                ? <CheckBoxIcon className="text-blue-600" />
+                ? <CheckBoxIcon className="text-blue-600 dark:text-blue-400" />
                 : <CheckBoxOutlinedIcon className="text-slate-400" />
             }
         </div>
