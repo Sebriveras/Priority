@@ -1,3 +1,5 @@
+import DesktopWindowsOutlinedIcon from '@mui/icons-material/DesktopWindowsOutlined';
+
 import { useState } from 'react';
 
 import { CardInputContainer } from '../Components/CardInputContainer';
@@ -18,27 +20,36 @@ export function App() {
   }
 
   return (
-    <div className='
-    flex flex-col
-    items-center
-    gap-1
-    w-screen h-screen  
-    bg-slate-50 dark:bg-slate-900
-    '>
-      <Header/>
-      <CardInputContainer/>
-      <div className="
-      fixed bottom-8 right-12
+    <div className='w-screen h-screen'>
+      <div className='
+      hidden
+      w-full h-full
+      items-center
+      gap-1
+      bg-slate-50 dark:bg-slate-900
       
-        sm:
-        md:
-        lg:
-        xl:
-        2xl:">
-        <ButtonSupport onClick={ () => setDontationOpenPopUp(true) }/>
+      sm:flex flex-col'>
+        <Header/>
+        <CardInputContainer/>
+        <div className="
+        fixed bottom-8 right-12
+        
+          sm:
+          md:
+          lg:
+          xl:
+          2xl:">
+          <ButtonSupport onClick={ () => setDontationOpenPopUp(true) }/>
+        </div>
+
+        { donationPopUp && ( <DonationPopUp onClose={ () => setDontationOpenPopUp(false) }/> )}
       </div>
 
-      { donationPopUp && ( <DonationPopUp onClose={ () => setDontationOpenPopUp(false) }/> )}
+      <div className='flex flex-col w-full h-full p-4 gap-4 items-center justify-center bg-slate-900 sm:hidden'>
+        <DesktopWindowsOutlinedIcon fontSize='large'/>
+        <p className='font-semibold text-2xl text-center text-slate-50'>Priority app is only available on desktop devices</p>
+        <p className='text-lg text-center text-slate-50'>Please access this app from a desktop device.</p>
+      </div>
     </div>
   )
 }
