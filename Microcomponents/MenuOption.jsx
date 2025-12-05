@@ -2,8 +2,8 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 const IconType = {
-    edit : DeleteOutlineOutlinedIcon,
-    remove : EditOutlinedIcon
+    edit :  EditOutlinedIcon,
+    remove : DeleteOutlineOutlinedIcon
 };
 
 const iconColor = {

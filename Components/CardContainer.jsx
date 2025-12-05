@@ -58,7 +58,6 @@ export function CardContainer({ content, switchMode}) {
     // 🔥 NUEVO ESTADO: SOLO UNA CARD EN MODO EDICIÓN
     const [editingId, setEditingId] = useState(null);
 
-
     // ----------------------------------------------------------
     // LOCAL STORAGE Y ESTADOS — SIN CAMBIOS
     // ----------------------------------------------------------
@@ -88,7 +87,16 @@ export function CardContainer({ content, switchMode}) {
 
     useEffect(() => {
         if (!content) return;
-        setArrayCards(prev => [content, ...prev]);
+
+        const MAX_CARDS = 30;
+
+        setArrayCards(prev => {
+            if (prev.length >= MAX_CARDS) {
+                console.warn("Límite de tareas alcanzado");
+                return prev; // NO agrega la nueva card
+            }
+            return [content, ...prev];
+        });
     }, [content]);
 
     useEffect(() => {
@@ -175,7 +183,14 @@ export function CardContainer({ content, switchMode}) {
     // RENDER
     // ----------------------------------------------------------
     return (
-        <div className='overflow-y-auto flex flex-col h-full py-1.5 px-3 gap-2'>
+        <div className='
+        overflow-y-auto flex flex-col h-full py-1.5 px-3 gap-2
+        
+        sm:
+        md:
+        lg:
+        xl:
+        2xl:'>
 
             {(screenState === "tasks-created-on-pending") && (
                 <DndContext 

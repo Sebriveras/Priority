@@ -33,7 +33,7 @@ const iconColors = {
 };
 
 const textStyles = {
-    veryLow: "text-slate-400 dark:text-slate-400" ,
+    veryLow: "text-slate-400 dark:text-slate-400",
     done: "text-slate-400 line-through dark:text-slate-400",
     default: "text-slate-700 dark:text-slate-100",
 };
@@ -44,7 +44,6 @@ const borderColors = {
     default: "border border-transparent"
 };
 
-
 export const TaskCard = ({
     type,
     index,
@@ -54,23 +53,22 @@ export const TaskCard = ({
     posBack,
     editingId,
     setEditingId
-    }) => {
+}) => {
 
     const isEditing = editingId === index;
 
     const handleOnSave = (x) => {
         newContent({ index, x });
-        setEditingId(null); // salir de edición
+        setEditingId(null);
     };
 
     const handleOnOptionClick = (id) => {
-        if(id === 'edit') return setEditingId(index)
-        if(id === 'remove') return remove(index)
-    };  
+        if (id === 'edit') return setEditingId(index);
+        if (id === 'remove') return remove(index);
+    };
 
     const handleCancel = () => setEditingId(null);
 
-    // Sortable (dnd-kit)
     const {
         attributes,
         listeners,
@@ -88,7 +86,6 @@ export const TaskCard = ({
     const textClass = textStyles[type] || textStyles.default;
     const checked = type === 'done';
 
-
     return (
         <div
             ref={setNodeRef}
@@ -96,30 +93,36 @@ export const TaskCard = ({
             style={style}
             className={`
                 flex flex-row items-center
-                w-full h-12 max-h-11 px-3 gap-3
-                rounded-md cursor-grab select-none
+                w-full min-w-[280px] min-h-12 px-3 py-2 gap-3
+                rounded-md
+                ${borderClass}
                 bg-slate-50 dark:bg-slate-700
                 shadow-[0_1px_4px_rgba(0,0,0,0.20)]
-                ${borderClass}
+                cursor-grab select-none
             `}
         >
 
             {/* ---------- VIEW MODE ---------- */}
             {!isEditing && (
                 <>
-                    <div {...listeners} className="flex w-full gap-3">
+                    {/* WRAPPER DEL TEXTO - IMPORTANTE: min-w-0 */}
+                    <div
+                        {...listeners}
+                        className="flex w-full min-w-0 items-center gap-3"
+                    >
                         {Icon && <Icon className={iconColor} />}
 
-                        <p className={`w-full text-start text-base ${textClass}`}>
+                        {/* TEXTO PRINCIPAL (YA NO SE ROMPE) */}
+                        <p
+                            className={`flex-1 min-w-0 truncate overflow-hidden text-ellipsis text-start text-base ${textClass}`}
+                        >
                             {content}
                         </p>
                     </div>
 
-                    <div className="flex flex-row items-center justify-center gap-1">
-                        {/* Ocultar botón de editar cuando estado = done */}
+                    <div className="flex items-center gap-1">
                         {type !== 'done' && (
-                            <MoreActionsMenu
-                            onOptionClick={handleOnOptionClick}/>
+                            <MoreActionsMenu onOptionClick={handleOnOptionClick} />
                         )}
 
                         <Checkbox
@@ -133,7 +136,7 @@ export const TaskCard = ({
             {/* ---------- EDIT MODE ---------- */}
             {isEditing && (
                 <>
-                    <div className="flex flex-row items-center justify-start w-full h-full gap-4">
+                    <div className="flex flex-row items-center justify-start w-full h-full gap-4 min-w-0">
                         {Icon && <Icon className={iconColor} />}
 
                         <CardInputText

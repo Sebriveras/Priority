@@ -47,7 +47,7 @@ export const InputText = ({ capturedText, onInputEvent }) => {
         <div
             ref={wrapperRef}
             className="
-                flex flex-row items-center
+                flex flex-row items-center justify-items-start
                 h-14 w-full py-3 px-3 gap-2 
                 border-t border-slate-300 dark:border-slate-600
                 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900

@@ -13,7 +13,7 @@ const layoutCatalog = {
     dark : 'justify-end'
 }
 
-export const ThemeSwitch = ({dark}) => {
+export const ThemeSwitch = () => {
     const [darkMode, setDarkMode] = useState(() => {
         // Leer el estado guardado en localStorage
         const savedTheme = localStorage.getItem("theme");
