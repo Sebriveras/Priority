@@ -1,9 +1,9 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-import { IconButton } from '../Microcomponents/IconButton.jsx';
-import { Checkbox } from '../Microcomponents/Checkbox.jsx';
-import { CardInputText } from '../Microcomponents/CardInputText.jsx';
+import { IconButton } from '../../Microcomponents/IconButton.jsx';
+import { Checkbox } from '../../Microcomponents/Checkbox.jsx';
+import { CardInputText } from '../../Microcomponents/CardInputText.jsx';
 
 import SentimentSatisfiedAltOutlinedIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
 import SnoozeIcon from '@mui/icons-material/SnoozeOutlined';
@@ -97,7 +97,7 @@ export const TaskCard = ({
                 rounded-md
                 ${borderClass}
                 bg-slate-50 dark:bg-slate-700
-                shadow-[0_1px_4px_rgba(0,0,0,0.20)]
+                shadow-[0_1px_4px_rgba(0,0,0,0.20)] dark:shadow-[0_1px_4px_rgba(0,0,0,0.40)]
                 cursor-grab select-none
             `}
         >

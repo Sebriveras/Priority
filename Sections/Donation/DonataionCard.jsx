@@ -1,6 +1,6 @@
-import PaypalIcon from "../Microcomponents/PaypalIcon";
-import KofiIcon from "../Microcomponents/KofiIcon";
-import BMACIcon from "../Microcomponents/BMACIcon";
+import PaypalIcon from "../../Microcomponents/PaypalIcon";
+import KofiIcon from "../../Microcomponents/KofiIcon";
+import BMACIcon from "../../Microcomponents/BMACIcon";
 
 const IconCatalog = {
     paypal : PaypalIcon,
@@ -42,7 +42,9 @@ export const DonationCard = ({type}) => {
         group
         flex flex-col items-start justify-between 
         py-3 pl-4 pr-5 h-39 min-w-42 w-full
-        rounded-xl border border-slate-300 dark:border-slate-500 bg-slate-50 dark:bg-slate-700 shadow-[0px_2px_6px_rgba(0,0,0,0.10)] cursor-pointer
+        rounded-xl border border-slate-300 dark:border-slate-500 
+        bg-slate-50 dark:bg-slate-700 
+        shadow-[0px_2px_6px_rgba(0,0,0,0.10)] cursor-pointer
         transition-all duration-300
 
         hover:items-center

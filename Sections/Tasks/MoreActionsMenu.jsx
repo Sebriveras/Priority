@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Menu } from "./Menu";
-import { IconButton } from "../Microcomponents/IconButton";
+import { IconButton } from "../../Microcomponents/IconButton";
 
 export const MoreActionsMenu = ({onOptionClick}) => {
   const [open, setOpen] = useState(false);

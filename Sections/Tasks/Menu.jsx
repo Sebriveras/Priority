@@ -1,4 +1,4 @@
-import { MenuOption } from '../Microcomponents/MenuOption';
+import { MenuOption } from './MenuOption';
 
 export const Menu = ({onOptionClick}) => {
 

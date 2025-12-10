@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { CardContainer } from './CardContainer'
-import { InputText } from './InputText'
-import { Switch } from '../Microcomponents/Switch'
+import { InputText } from '../../Components/InputText'
+import { Switch } from '../../Microcomponents/Switch'
 
 export const CardInputContainer = () => {
     const [content, setContent] = useState("")

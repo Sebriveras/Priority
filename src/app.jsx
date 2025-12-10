@@ -2,11 +2,12 @@ import DesktopWindowsOutlinedIcon from '@mui/icons-material/DesktopWindowsOutlin
 
 import { useState } from 'react';
 
-import { CardInputContainer } from '../Components/CardInputContainer';
+import { CardInputContainer } from '../Sections/Tasks/CardInputContainer';
 import { Header } from '../Components/Header';
 
-import { ButtonSupport } from '../Microcomponents/ButtonSupport';
-import { DonationPopUp } from '../Components/DonationPopUp'
+import { ButtonSupport } from '../Sections/Donation/ButtonSupport';
+import { DonationPopUp } from '../Sections/Donation/DonationPopUp';
+
 
 /*git add .
 git commit -m "primer commit"
@@ -14,10 +15,6 @@ git push -u origin main*/
 
 export function App() {
   const [donationPopUp, setDontationOpenPopUp] = useState(false)
-
-  const handleOnClick = () => {
-    console.log('button s')
-  }
 
   return (
     <div className='w-screen h-screen'>

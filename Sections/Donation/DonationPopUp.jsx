@@ -1,5 +1,5 @@
-import { IconButton } from "../Microcomponents/IconButton";
-import { DonationCard } from "../Microcomponents/DonataionCard";
+import { IconButton } from "../../Microcomponents/IconButton";
+import { DonationCard } from "./DonataionCard";
 import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined';
 
 export const DonationPopUp = ({ onClose }) => {

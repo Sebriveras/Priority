@@ -12,7 +12,8 @@ export const ButtonSupport = ({onClick}) => {
             min-w-13 p-4
             rounded-full
             bg-pink-500 text-pink-50 shadow-md
-            hover:bg-pink-500 active:bg-pink-400
+            hover:bg-pink-500 
+            active:bg-pink-500/70
             cursor-pointer
 
             transition-all duration-200
