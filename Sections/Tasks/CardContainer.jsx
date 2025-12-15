@@ -95,7 +95,7 @@ export function CardContainer({ content, switchMode}) {
                 console.warn("Límite de tareas alcanzado");
                 return prev; // NO agrega la nueva card
             }
-            return [content, ...prev];
+            return [...prev, content];
         });
     }, [content]);
 
